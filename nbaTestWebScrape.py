@@ -3,6 +3,7 @@ from bs4 import BeautifulSoup
 import pandas as pd
 
 playerInfo = str(input("Please enter players first and last name as follows'LeBron James': "))
+playerName = playerInfo
 playerInfo = (playerInfo.lower()).split()
 
 if (len(playerInfo[1]) >= 5):
@@ -16,13 +17,22 @@ soup = BeautifulSoup(html,'html.parser')
 soup.findAll('tr', limit=2)
 # use getText()to extract the text we need into a list
 headers = [th.getText() for th in soup.findAll('tr', limit=2)[0].findAll('th')]
-headers.remove('Date')
+#headers.remove('Date')
 
 # exclude the first column as we will not need the ranking order from Basketball Reference for the analysis
 rows = soup.findAll('tr')[1:6]
+
 player_stats = [[td.getText() for td in rows[i].findAll('td')]
             for i in range(len(rows))]
+
+dates = [[th.getText() for th in rows[i].findAll('th')] for i in range(len(rows))]
+
+
+for i in range(len(player_stats)):
+    player_stats[i].insert(0,dates[i])
+
 
 stats = pd.DataFrame(player_stats, columns = headers)
 stats.head(10)
 
+print (stats)

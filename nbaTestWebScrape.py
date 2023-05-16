@@ -7,12 +7,13 @@ count = 1
 playerPage = '0'+str(count)
 playerInfo = str(input("Please enter players first and last name as follows'LeBron James': "))
 while playerInfo != 'n':
+    playerPage = '0'+str(count)
     playerName = playerInfo
     playerInfo = playerInfo.replace(".","")
     playerInfo = playerInfo.replace("'","")
     playerInfoList = (playerInfo.lower()).split()
 
-    if (len(playerInfo[1]) >= 5):
+    if (len(playerInfoList[1]) >= 5):
         url = f"https://www.basketball-reference.com/players/{playerInfoList[1][0]}/{playerInfoList[1][:5]+playerInfoList[0][:2]+playerPage}.html"
     else:
         url = f"https://www.basketball-reference.com/players/{playerInfoList[1][0]}/{playerInfoList[1][:]+playerInfoList[0][:2]+playerPage}.html"
@@ -42,8 +43,9 @@ while playerInfo != 'n':
 
     print (stats)
 
-    nextPlayer = str(input("If this isn't the correct player but has the same name type 'y', if it is the correct player enter 'n': "))
+    nextPlayer = str(input("If this isn't the correct player but has the same name type 'y', if it is the correct player enter 'g': "))
     while (nextPlayer != 'y'):
+        count = 1
         rawStatsWanted = (str(input("What stat would you like to see the average of for the past 5 games the player has played (enter 'q' to stop or 'n' for new player): ")))
         while (rawStatsWanted != 'q' and rawStatsWanted != 'n'):
             statsWanted = (rawStatsWanted).lower()
@@ -56,6 +58,7 @@ while playerInfo != 'n':
             sys.exit()
         else:
             playerInfo = str(input("Please enter players first and last name as follows'LeBron James': "))
+            break
     if (nextPlayer =='y'):
         count+= 1
         playerPage = '0'+str(count)

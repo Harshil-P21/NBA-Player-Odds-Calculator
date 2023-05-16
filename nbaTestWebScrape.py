@@ -4,6 +4,7 @@ import pandas as pd
 
 playerInfo = str(input("Please enter players first and last name as follows'LeBron James': "))
 playerName = playerInfo
+playerInfo = playerInfo.replace(".","")
 playerInfo = (playerInfo.lower()).split()
 
 if (len(playerInfo[1]) >= 5):
@@ -33,6 +34,12 @@ for i in range(len(player_stats)):
 
 
 stats = pd.DataFrame(player_stats, columns = headers)
-stats.head(10)
 
 print (stats)
+
+rawStatsWanted = (str(input("What stat would you like to see the average of for the past 5 games the player has played (Assist, Points etc): ")))
+statsWanted = (rawStatsWanted).lower()
+for col in stats.columns:
+    if ((str(col)).lower() == statsWanted):
+        stats = stats.astype({col:'float'})
+        print (f"The average {rawStatsWanted} for {playerName} is {round(stats[col].mean(),1)}")
